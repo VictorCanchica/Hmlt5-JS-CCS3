@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formulario contacto</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="CSS/estilosFormulario.css">
+        
+    </head>
+    <body>
+    <header>
+    <h1> Formulario Web</h1>
+    <fieldset>
+    <legend>Detalles de Contacto</legend>
+    <form action="#">
+        <label> Nombre:</label>
+        <input type="text" autofocus="" placeholder="Escribe tu nombre" name="nombre"
+               required="required" pattern="[a-zA-Z\s]{5,}"/>
+        <span class="invalid">*el nombre es requerido</span>
+        <label> Email:</label>
+        <input type="email" name="email" required="" placeholder="Escribe tu Email"/>
+        <span class="invalid"> *el Email es Requerido</span>
+         <label>Telefono:</label>
+         <input type="tel" name="telefono" required="" placeholder="Escribe tu numero Tlf."/>
+         <span class="invalid"> *el Telefono es requerido</span>
+         <label>Pais:</label>
+         <input name="pais" list="paises" placeholder="Escribe/Selecciona Tu Pais"/>
+         <datalist id="paises">
+             <option>Peru</option>
+             <option>Mexico</option>
+             <option>España</option>
+             <option>otro...</option>
+         </datalist>
+         <label>Edad:</label>
+         <input type="number" name="edad" min="18" max="65"/>
+         <label id="nacimiento"> Fecha de Nacimiento</label>
+         <input type="date" name="nacimiento" min="1900-01-01" max="3000-12-31"/>
+         <p></p>
+         <div>
+             <input type="submit" value="Enviar" id="enviar">
+         </div>
+    </form>
+    </fieldset>
+    </header>
+    </body>
+</html>

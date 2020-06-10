@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Transferencia Datos Drag & Drop</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="CSS/estilos.css"/> 
+    <script src="jquery.min.js"></script>
+    <script src="modernizr.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (Modernizr.draganddrop) {
+          //Registramos el método listener dragstart sobre la imagen que vamos a mover
+          $('#JavaScript').bind("dragstart", manejoDragStart);
+          $('#CSS3').bind("dragstart", manejoDragStart);
+          $('#HTML5').bind("dragstart", manejoDragStart);
+          
+
+          //Registramos los métodos listener dragover y drop en la zona que recibirá el evento
+          $('#zona_arrastrar').bind({
+            "dragover": manejoDragOver,
+            "drop": manejoDrop
+          });
+        } else {
+          alert("Tu navegador NO soporta Drag and Drop");
+        }
+        
+        //Solo es necesario si se usa JQuery
+        //http://weblog.bocoup.com/using-datatransfer-with-jquery-events/
+        $.event.props.push('dataTransfer');
+
+        //Funcion que se ejecuta al arrastrar el elemento a depositar en la zona de arrastrar_soltar
+        function manejoDragStart(evento) {
+          $("#msg_eventos").html("Inicio del evento Arrastrar: " + evento.target.id);
+          //Transferimos el id de la imagen seleccionada
+          evento.dataTransfer.setData('text/html', this.id);
+        }
+
+        //Funcion que se ejecuta cuando estamos sobre la zona de arrastrar_soltar
+        function manejoDragOver(evento) {
+          evento.stopPropagation();
+          evento.preventDefault();
+          $("#msg_eventos").html("Manejo dragover en: " + evento.target.id);
+        }
+
+        //Funcion que se ejecuta soltamos el elemento en la zona de arrastrar_soltar
+        function manejoDrop(evento) {
+          evento.stopPropagation();
+          evento.preventDefault();
+          $("#msg_eventos").html("Manejo drop en: " + evento.target.id);
+          var idImgSel = evento.dataTransfer.getData('text/html');
+          $("#elementos").append(idImgSel + " ");
+          //Agregamos la imagen a la zona de drag&drop (target en este caso)
+          evento.target.appendChild(document.getElementById(idImgSel));
+        }
+        
+      });
+    </script>
+  </head>
+  <body>
+      <h1 class="cabecero-contenedor titulo">Transferencia Datos Drag & Drop</h1>
+    <div id="msg_eventos"></div>
+    <figure>
+      <img id="JavaScript" ondragover="return false;" draggable="true" src="recursos/javas.png" alt="JavaScript" width="100" height="100">
+      <img id="CSS3"  draggable="true" src="recursos/ccs3.png" alt="CSS3" width="100" height="100">
+      <img id="HTML5"  draggable="true" src="recursos/descarga.png" alt="HTML5" width="100" height="100">
+      <figcaption>Imágenes a arrastrar:</figcaption>
+    </figure>
+    <div id="zona_arrastrar"> Arrastra las imágenes:</div>
+    <p>Elementos Seleccionados:
+    <div id="elementos"></div>
+  </body>
+</html>
